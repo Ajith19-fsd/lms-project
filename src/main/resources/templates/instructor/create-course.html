@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Course | Instructor</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Load JS from /static/js/ -->
+    <script src="/static/js/create_course.js" defer></script>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans flex flex-col">
+
+<!-- Header -->
+<header class="bg-blue-600 text-white py-4 shadow-md">
+    <div class="max-w-6xl mx-auto text-center">
+        <h1 class="text-2xl font-bold tracking-wide">Create Course</h1>
+
+        <nav class="mt-2 flex justify-center space-x-4">
+            <a href="/instructor/dashboard" class="hover:underline">Dashboard</a>
+            <a href="/instructor/my-courses" class="hover:underline">My Courses</a>
+            <!-- Logout now white (text-red-200 removed) -->
+            <a href="#" id="logoutLink" class="hover:underline">Logout</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main role="main" class="flex-grow flex flex-col items-center justify-center px-4 py-8">
+    <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-xl">
+        <form id="createCourseForm" class="flex flex-col gap-4">
+            <label class="flex flex-col text-gray-700 font-medium">
+                Course Title
+                <input type="text" name="title" required class="border p-2 rounded mt-1">
+            </label>
+
+            <label class="flex flex-col text-gray-700 font-medium">
+                Course Description
+                <textarea name="description" required rows="4" class="border p-2 rounded mt-1"></textarea>
+            </label>
+
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition">
+                Create Course
+            </button>
+        </form>
+    </div>
+</main>
+
+<!-- Toast Notifications -->
+<div id="toastContainer" class="fixed top-4 right-4 z-50 flex flex-col items-end"></div>
+
+<footer class="text-center text-gray-500 text-sm py-4">
+    © 2025 LMS Project by Ajith
+</footer>
+
+<script>
+    // Logout link for this page
+    const logoutLink = document.getElementById("logoutLink");
+    if (logoutLink) {
+        logoutLink.addEventListener("click", e => {
+            e.preventDefault();
+            localStorage.clear();
+            window.location.href = "/login";
+        });
+    }
+</script>
+
+</body>
+</html>

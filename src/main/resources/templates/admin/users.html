@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Users | LMS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+<div class="max-w-7xl mx-auto p-6">
+
+    <!-- HEADER -->
+    <div class="flex justify-between items-center mb-10 relative">
+        <h1 class="text-3xl font-bold text-gray-800 absolute left-1/2 -translate-x-1/2">
+            👥 Manage Users
+        </h1>
+
+        <div class="flex gap-3">
+            <a href="/admin/dashboard"
+               class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">← Back to Dashboard</a>
+
+            <button id="logoutBtn"
+                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">
+                Logout
+            </button>
+        </div>
+    </div>
+
+    <!-- FILTER TABS -->
+    <div class="flex justify-center gap-4 mb-8">
+        <button class="user-filter-tab active-tab shadow-sm"
+                data-role="ALL">All</button>
+
+        <button class="user-filter-tab shadow-sm"
+                data-role="ADMIN">Admin</button>
+
+        <button class="user-filter-tab shadow-sm"
+                data-role="INSTRUCTOR">Instructor</button>
+
+        <button class="user-filter-tab shadow-sm"
+                data-role="STUDENT">Student</button>
+    </div>
+
+    <!-- USERS LIST -->
+    <div id="usersContainer"
+         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fadeIn"></div>
+
+</div>
+
+<!-- TOAST -->
+<div id="toastContainer" class="fixed bottom-5 right-5 z-50"></div>
+
+<script src="/js/admin/users.js"></script>
+
+<style>
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .user-filter-tab {
+        padding: 10px 20px;
+        border-radius: 12px;
+        font-weight: 600;
+        background-color: #e5e7eb;
+        color: #374151;
+        transition: 0.25s ease;
+    }
+
+    .user-filter-tab:hover {
+        background-color: #d1d5db;
+    }
+
+    .active-tab {
+        background-color: #3b82f6 !important;
+        color: white !important;
+        transform: scale(1.05);
+    }
+</style>
+
+</body>
+</html>

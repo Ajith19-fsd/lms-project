@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Create Lesson | Instructor</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- UploadCare Script -->
+    <script>
+        UPLOADCARE_PUBLIC_KEY = "570262cd43274b2d7339";
+        UPLOADCARE_STORE = "auto";
+    </script>
+    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
+    <script src="/js/instructor/create-lesson.js" defer></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen font-sans flex flex-col">
+
+<header class="bg-green-600 text-white py-4 shadow-md text-center">
+    <h1 class="text-2xl font-bold">Create Lesson</h1>
+    <nav class="mt-2">
+        <a href="/instructor/my-courses" class="mx-2 hover:underline">My Courses</a>
+        <a href="/logout" class="mx-2 hover:underline">Logout</a>
+    </nav>
+</header>
+
+<main class="flex-grow flex flex-col items-center justify-center px-4 py-8">
+    <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-xl">
+
+        <form id="createLessonForm" class="flex flex-col gap-4">
+
+            <label class="flex flex-col text-gray-700 font-medium">
+                Course ID
+                <input type="number" name="courseId" id="courseId" required class="border p-2 rounded mt-1">
+            </label>
+
+            <label class="flex flex-col text-gray-700 font-medium">
+                Lesson Title
+                <input type="text" name="title" id="title" required class="border p-2 rounded mt-1">
+            </label>
+
+            <label class="flex flex-col text-gray-700 font-medium">
+                Lesson Description
+                <textarea name="description" id="description" required rows="4" class="border p-2 rounded mt-1"></textarea>
+            </label>
+
+            <!-- UploadCare Widget -->
+            <label class="flex flex-col text-gray-700 font-medium">
+                Upload Lesson File
+                <input type="hidden" id="fileUrl" />
+
+                <input type="hidden"
+                       role="uploadcare-uploader"
+                       data-tabs="file url camera"
+                       data-clearable="true"
+                       data-multiple="false">
+            </label>
+
+            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded transition">
+                Create Lesson
+            </button>
+        </form>
+
+    </div>
+</main>
+
+<div id="toastContainer" class="fixed top-4 right-4 z-50"></div>
+
+</body>
+</html>

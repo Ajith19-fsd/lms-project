@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses | Instructor</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Correct JS path and defer -->
+    <script src="/js/instructor/my-courses.js" defer></script>
+    <script>
+        function logout() {
+            localStorage.clear();
+            window.location.href = "/login";
+        }
+    </script>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans flex flex-col">
+
+<!-- Header -->
+<header class="bg-yellow-600 text-white py-4 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col items-center">
+
+        <h1 class="text-2xl font-bold text-center">My Courses</h1>
+
+        <nav class="mt-1 text-sm flex space-x-4">
+
+            <!-- Dashboard -->
+            <a href="/instructor/dashboard" class="hover:underline">Dashboard</a>
+
+            <!-- New Logout Button -->
+            <button
+                    onclick="logout()"
+                    class="hover:underline text-white">
+                Logout
+            </button>
+
+        </nav>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main role="main" class="flex-grow px-4 py-8 max-w-7xl mx-auto">
+    <div class="overflow-x-auto bg-white rounded-lg shadow">
+        <table class="min-w-full" id="coursesTable">
+            <thead class="bg-yellow-600 text-white">
+            <tr>
+                <th class="py-3 px-4 text-left">Title</th>
+                <th class="py-3 px-4 text-left">Status</th>
+                <th class="py-3 px-4 text-left">Lessons</th>
+                <th class="py-3 px-4 text-left">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="divide-y"></tbody>
+        </table>
+    </div>
+</main>
+
+<!-- Toast Notifications -->
+<div id="toastContainer" class="fixed top-4 right-4 z-50 flex flex-col items-end"></div>
+
+<footer class="text-center text-gray-500 text-sm py-4">
+    © 2025 LMS Project by Ajith
+</footer>
+
+</body>
+</html>

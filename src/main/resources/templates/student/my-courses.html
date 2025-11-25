@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses | Student</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="/js/student/my-courses.js" defer></script>
+
+    <!-- Global Logout -->
+    <script>
+        function logout() {
+            localStorage.removeItem("token");
+            localStorage.removeItem("role");
+            window.location.href = "/login";
+        }
+    </script>
+</head>
+
+<body class="bg-gray-100 min-h-screen font-sans flex flex-col">
+
+<header class="bg-yellow-600 text-white py-4 shadow-md text-center">
+    <h1 class="text-2xl font-bold">My Courses</h1>
+
+    <!-- ✅ Updated Navigation with Logout -->
+    <nav class="mt-2 flex justify-center space-x-6">
+        <a href="/student/dashboard" class="hover:underline">Dashboard</a>
+
+        <!-- Logout same style as Dashboard -->
+        <button onclick="logout()" class="hover:underline">
+            Logout
+        </button>
+    </nav>
+</header>
+
+<main class="flex-grow px-4 py-8">
+    <div class="overflow-x-auto max-w-4xl mx-auto">
+        <table class="min-w-full bg-white shadow rounded-lg" id="myCoursesTable">
+            <thead class="bg-yellow-600 text-white">
+            <tr>
+                <th class="py-2 px-4 text-left">Title</th>
+                <th class="py-2 px-4 text-left">Status</th>
+                <th class="py-2 px-4 text-left">Lessons</th>
+                <th class="py-2 px-4 text-left">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Rows populated by my-courses.js -->
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<!-- Toast container -->
+<div id="toastContainer" class="fixed top-4 right-4 z-50 flex flex-col items-end"></div>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | LMS</title>
+    <script src="/js/admin/dashboard_admin.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen font-sans flex flex-col">
+
+<header class="bg-green-700 text-white py-4 shadow-md text-center">
+    <h1 class="text-2xl font-bold tracking-wide">Admin Dashboard</h1>
+</header>
+
+<main class="flex-grow flex flex-col items-center justify-center px-4 mt-6">
+    <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-xl text-center">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">
+            Welcome, <span id="adminName">Admin</span>
+        </h2>
+
+        <div id="statsContainer" class="grid grid-cols-2 gap-6 mb-6"></div>
+
+        <div class="flex justify-center gap-4 mb-6">
+            <a href="/admin/manage-courses"
+               class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                📚 Manage Courses
+            </a>
+            <a href="/admin/manage-users"
+               class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition duration-200">
+                👥 Manage Users
+            </a>
+        </div>
+
+        <button id="logoutBtn"
+                class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition duration-200">
+            Logout
+        </button>
+    </div>
+</main>
+
+<div id="toastContainer" class="fixed top-4 right-4 z-50 flex flex-col items-end"></div>
+
+<footer class="text-center text-gray-500 text-sm py-4">
+    © 2025 LMS Project by Ajith
+</footer>
+</body>
+</html>

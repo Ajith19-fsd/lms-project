@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | LMS</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="icon" href="data:,">
+
+    <script src="/js/auth.js" defer></script>
+</head>
+
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen">
+
+<div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
+    <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Create Account</h2>
+
+    <form id="signupForm" onsubmit="handleSignup(event)" class="space-y-4">
+        <input id="fullName" type="text" placeholder="Full Name"
+               class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-blue-500" required>
+        <input id="email" type="email" placeholder="Email"
+               class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-blue-500" required>
+        <input id="password" type="password" placeholder="Password"
+               class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-blue-500" required>
+        <select id="role" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-blue-500" required>
+            <option value="" disabled selected>Select Role</option>
+            <option value="STUDENT">Student</option>
+            <option value="INSTRUCTOR">Instructor</option>
+        </select>
+        <button type="submit"
+                class="w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition">
+            Sign Up
+        </button>
+    </form>
+
+    <p class="text-center text-gray-600 mt-6">
+        Already have an account?
+        <a href="/login" class="text-blue-600 hover:underline">Login</a>
+    </p>
+</div>
+
+<div id="toast" class="fixed bottom-5 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg bg-red-500 text-white hidden"></div>
+
+<footer class="absolute bottom-5 text-gray-400 text-sm">
+    © 2025 LMS Project by Ajith
+</footer>
+
+</body>
+</html>

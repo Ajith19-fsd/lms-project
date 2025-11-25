@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Lessons | LMS</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="/js/student/course_lessons.js" defer></script>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans flex flex-col">
+
+<header class="bg-green-600 text-white py-4 shadow-md text-center">
+    <h1 id="course-title" class="text-3xl font-bold tracking-wide" th:text="${courseTitle} ?: 'Course Lessons'">Course Lessons</h1>
+    <nav class="mt-2">
+        <a th:href="@{/student/my-courses}" class="mx-2 hover:underline">My Courses</a>
+        <a th:href="@{/student/dashboard}" class="mx-2 hover:underline">Dashboard</a>
+        <a th:href="@{/logout}" class="mx-2 hover:underline">Logout</a>
+    </nav>
+</header>
+
+<main class="flex-grow px-4 py-8 max-w-7xl mx-auto">
+    <div class="overflow-x-auto bg-white rounded-lg shadow">
+        <table class="min-w-full" id="lessonsTable">
+            <thead class="bg-green-600 text-white">
+            <tr>
+                <th class="py-3 px-4 text-left">Title</th>
+                <th class="py-3 px-4 text-left">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td colspan="2" class="p-6 text-center text-gray-600">Loading...</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<div id="toastContainer" class="fixed top-4 right-4 z-50 flex flex-col items-end"></div>
+
+<!-- Hidden fields for JS -->
+<input type="hidden" id="courseId" th:value="${courseId}">
+<input type="hidden" id="courseTitle" th:value="${courseTitle}">
+
+<footer class="text-center text-gray-500 text-sm py-4">
+    © 2025 LMS Project by Ajith
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Lesson | Instructor</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="/js/instructor/view-lesson.js" defer></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen font-sans flex flex-col">
+
+<header class="bg-green-600 text-white py-4 shadow-md">
+    <div class="max-w-4xl mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold" id="lessonTitle">Lesson Title</h1>
+
+        <nav class="space-x-4">
+            <a id="backToLessonsBtn" href="#" class="hover:underline bg-white/20 px-3 py-1 rounded">
+                ← Back to Lessons
+            </a>
+            <a href="/instructor/my-courses" class="hover:underline">My Courses</a>
+            <a href="/logout" class="hover:underline">Logout</a>
+        </nav>
+    </div>
+</header>
+
+<main class="flex-grow px-4 py-8 max-w-3xl mx-auto">
+    <div class="bg-white shadow-lg rounded-2xl p-8">
+
+        <h2 class="text-xl font-semibold mb-2">Description</h2>
+        <p id="lessonDescription" class="text-gray-700 mb-6">
+            Loading...
+        </p>
+
+        <h3 class="text-lg font-semibold mb-2">Lesson File</h3>
+        <div id="mediaContainer" class="text-blue-600"></div>
+
+    </div>
+</main>
+
+<div id="toastContainer" class="fixed top-4 right-4 z-50"></div>
+
+</body>
+</html>

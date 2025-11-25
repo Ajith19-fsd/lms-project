@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson View | LMS</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Pass lessonId and courseId from Thymeleaf -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        window.lessonIdFromPage = [[${lessonId}]];
+        window.courseIdFromPage = [[${courseId}]];
+        /*]]>*/
+    </script>
+
+    <script src="/js/student/lesson-view-student.js" defer></script>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans flex flex-col">
+
+<header class="bg-green-600 text-white py-4 shadow-md flex justify-between items-center px-6">
+    <h1 id="lessonTitle" class="text-2xl font-bold">Lesson Title</h1>
+    <a id="backToLessonsBtn" href="#" class="bg-white text-green-700 px-3 py-1 rounded-xl hover:bg-gray-100 transition">
+        ← Back to Lessons
+    </a>
+</header>
+
+<main class="flex-grow px-4 py-8 max-w-4xl mx-auto">
+    <div class="overflow-x-auto bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Description</h2>
+        <p id="lessonDescription" class="text-gray-700 mb-6">No description available.</p>
+
+        <h3 class="text-lg font-semibold mb-4">Lesson Files</h3>
+        <ul id="mediaList" class="list-disc list-inside">
+            <li class="text-gray-500">Loading...</li>
+        </ul>
+    </div>
+</main>
+
+<div id="toastContainer" class="fixed top-4 right-4 z-50 flex flex-col items-end"></div>
+
+<footer class="text-center py-4 text-gray-500 text-sm">
+    © 2025 LMS Project by Ajith
+</footer>
+
+</body>
+</html>

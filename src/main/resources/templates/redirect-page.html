@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="icon" href="data:,">
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<div class="text-center">
+    <h2 class="text-2xl font-semibold text-gray-700">Redirecting...</h2>
+    <p class="text-gray-500 mt-2">Please wait a moment</p>
+</div>
+
+<script>
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    if (!token) {
+        window.location.href = "/login";
+    }
+
+    function redirectByRole(role) {
+        switch (role?.toUpperCase()) {
+            case "ADMIN":
+                window.location.href = "/admin/dashboard";
+                break;
+            case "INSTRUCTOR":
+                window.location.href = "/instructor/dashboard";
+                break;
+            case "STUDENT":
+                window.location.href = "/student/my-courses";
+                break;
+            default:
+                localStorage.clear();
+                window.location.href = "/login";
+        }
+    }
+
+    setTimeout(() => redirectByRole(role), 500);
+</script>
+</body>
+</html>

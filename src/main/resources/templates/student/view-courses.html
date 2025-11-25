@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Courses | Student</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="/js/student/view-courses.js" defer></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+<header class="bg-green-600 text-white p-4 shadow flex justify-between items-center">
+    <h1 class="text-xl font-bold">Available Courses 🎓</h1>
+
+    <a href="/student/dashboard"
+       class="bg-white text-green-700 font-medium px-4 py-2 rounded shadow hover:bg-gray-100 transition">
+        ⬅ Back to Dashboard
+    </a>
+</header>
+
+<main class="p-6 max-w-6xl mx-auto">
+    <!-- Toast container -->
+    <div id="toastContainer" class="fixed top-4 right-4 z-50 flex flex-col items-end"></div>
+
+    <!-- No courses message -->
+    <p id="noCoursesMsg" class="text-center text-gray-500 hidden mb-4"></p>
+
+    <!-- Courses grid -->
+    <div id="coursesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</main>
+
+</body>
+</html>
