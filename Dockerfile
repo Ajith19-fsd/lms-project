@@ -17,4 +17,5 @@ RUN ./mvnw clean package -DskipTests
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "target/lmsbackend-0.0.1-SNAPSHOT.jar"]
+# Automatically detect the JAR file
+CMD ["sh", "-c", "java -jar target/*.jar"]
