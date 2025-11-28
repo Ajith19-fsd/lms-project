@@ -1,3 +1,43 @@
+async function handleSignup(event) {
+    event.preventDefault();
+
+    const fullName = document.getElementById("fullName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const role = document.getElementById("role").value.trim();
+
+    if (!role) {
+        showToast("Please select a role");
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/auth/signup/${role}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ fullName, email, password })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            showToast(data.message || "Signup Failed");
+            return;
+        }
+
+        // Save user details
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("role", data.role);
+        localStorage.setItem("userId", data.userId);
+
+        redirectUser(data.role);
+
+    } catch (err) {
+        console.error(err);
+        showToast("Signup error: Cannot connect to server");
+    }
+}
+
 async function handleLogin(event) {
     event.preventDefault();
     const email = document.getElementById("email").value.trim();
@@ -17,7 +57,6 @@ async function handleLogin(event) {
             return;
         }
 
-        // Save token and role
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.role);
         localStorage.setItem("userId", data.userId);
@@ -47,7 +86,6 @@ function redirectUser(role) {
     }
 }
 
-// Attach JWT to all API calls
 async function fetchWithAuth(url, options = {}) {
     const token = localStorage.getItem("token");
     options.headers = {
