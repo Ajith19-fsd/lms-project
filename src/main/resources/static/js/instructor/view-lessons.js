@@ -33,13 +33,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             const tr = document.createElement("tr");
             tr.className = "border-b hover:bg-gray-50";
 
-            const fileCell = lesson.fileUrl
-                ? `<a href="${lesson.fileUrl}" target="_blank" class="text-blue-600 underline">View File</a>`
-                : `<span class="text-gray-500">No file</span>`;
-
             tr.innerHTML = `
                 <td class="py-2 px-4">${lesson.title}</td>
-                <td class="py-2 px-4">${fileCell}</td>
                 <td class="py-2 px-4 space-x-2">
                     <a href="/instructor/view-lesson/${lesson.id}" class="text-green-600 hover:underline">View</a>
                     <button data-id="${lesson.id}" class="deleteBtn text-red-600 hover:underline">Delete</button>

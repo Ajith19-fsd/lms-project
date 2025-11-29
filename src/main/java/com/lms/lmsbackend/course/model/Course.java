@@ -21,13 +21,17 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String title;
 
     @Column(length = 2000)
     private String description;
 
-    private String category;
-    private Double price;
+    @Column(nullable = false)
+    private String category = "General";
+
+    @Column(nullable = false)
+    private Double price = 0.0;
 
     @Enumerated(EnumType.STRING)
     private CourseStatus status = CourseStatus.PENDING;

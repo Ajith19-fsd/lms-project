@@ -30,6 +30,9 @@ public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
 
+    /**
+     * Custom AuthenticationEntryPoint to return JSON error for unauthorized requests
+     */
     private final AuthenticationEntryPoint restAuthenticationEntryPoint = (request, response, authException) -> {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
@@ -42,10 +45,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // Enable CORS
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
+                // Disable CSRF for APIs
                 .csrf(cs -> cs.disable())
+                // Use stateless session (JWT)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // Handle unauthorized requests
                 .exceptionHandling(e -> e.authenticationEntryPoint(restAuthenticationEntryPoint))
+                // Define authorization rules
                 .authorizeHttpRequests(auth -> auth
                         // Public pages and static assets
                         .requestMatchers(HttpMethod.GET,
@@ -58,24 +66,31 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
 
                         // Swagger/OpenAPI
-                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/swagger-resources/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/swagger-resources/**")
+                        .permitAll()
 
-                        // API role-based protection
+                        // Role-based API endpoints
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/instructor/**").hasRole("INSTRUCTOR")
                         .requestMatchers("/api/student/**").hasRole("STUDENT")
 
-                        // Thymeleaf pages: allow, JS fetches must use JWT
+                        // Thymeleaf pages (allow page load, API calls still need JWT)
                         .requestMatchers("/admin/**", "/instructor/**", "/student/**").permitAll()
 
+                        // Any other request requires authentication
                         .anyRequest().authenticated()
                 )
+                // Add JWT filter before username/password authentication
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                // Disable frame options for H2 console if needed
                 .headers(h -> h.frameOptions(f -> f.disable()));
 
         return http.build();
     }
 
+    /**
+     * CORS configuration: allow all origins, methods, and headers
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cfg = new CorsConfiguration();
@@ -89,11 +104,17 @@ public class SecurityConfig {
         return source;
     }
 
+    /**
+     * Expose AuthenticationManager bean for authentication operations
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
+    /**
+     * Password encoder bean for hashing passwords
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

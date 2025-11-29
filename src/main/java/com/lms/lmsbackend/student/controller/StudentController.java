@@ -63,6 +63,25 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getLessonWithMedia(lessonId));
     }
 
+    // ✅ NEW: Enroll in course
+    @PostMapping("/enroll/{courseId}")
+    public ResponseEntity<Map<String, String>> enrollCourse(@PathVariable Long courseId, Authentication auth) {
+        User user = getUserFromAuth(auth);
+
+        boolean enrolled = studentService.enrollStudent(user.getId(), courseId);
+        if (!enrolled) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Already enrolled"));
+        }
+        return ResponseEntity.ok(Map.of("message", "Enrolled successfully"));
+    }
+
+    // ✅ NEW: Check if student is enrolled
+    @GetMapping("/is-enrolled/{courseId}")
+    public ResponseEntity<Boolean> isEnrolled(@PathVariable Long courseId, Authentication auth) {
+        User user = getUserFromAuth(auth);
+        return ResponseEntity.ok(studentService.isStudentEnrolled(user.getId(), courseId));
+    }
+
     private User getUserFromAuth(Authentication auth) {
         String email = auth.getName();
         return userRepository.findByEmail(email)

@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,15 +25,12 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Display name
     @Column(nullable = false)
     private String fullName;
 
-    // Username shown everywhere (DASHBOARD / ADMIN)
     @Column(nullable = false)
     private String username;
 
-    // Login email (unique)
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -44,10 +42,13 @@ public class User implements UserDetails {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
+    // ⚡ Add courses relationship for cascading deletion
+    @OneToMany(mappedBy = "instructor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<com.lms.lmsbackend.course.model.Course> courses = new ArrayList<>();
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // Auto timestamps
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
@@ -63,25 +64,12 @@ public class User implements UserDetails {
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (role == null || role.getName() == null) {
-            return List.of();
-        }
+        if (role == null || role.getName() == null) return List.of();
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.getName().name()));
     }
 
-    @Override
-    @JsonIgnore
-    public String getPassword() {
-        return password;
-    }
-
-    // Authentication using email → return email
-    @Override
-    @JsonIgnore
-    public String getUsername() {
-        return email;
-    }
-
+    @Override @JsonIgnore public String getPassword() { return password; }
+    @Override @JsonIgnore public String getUsername() { return email; }
     @Override @JsonIgnore public boolean isAccountNonExpired() { return true; }
     @Override @JsonIgnore public boolean isAccountNonLocked() { return true; }
     @Override @JsonIgnore public boolean isCredentialsNonExpired() { return true; }

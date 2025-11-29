@@ -21,22 +21,22 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     @Override
     public EnrollmentResponse enrollStudent(Long studentId, EnrollmentRequest request) {
 
-        boolean alreadyEnrolled = enrollmentRepository
+        return enrollmentRepository
                 .findByStudentIdAndCourseId(studentId, request.getCourseId())
-                .isPresent();
-
-        if (alreadyEnrolled) {
-            throw new IllegalArgumentException("Student is already enrolled in this course.");
-        }
-
-        Enrollment enrollment = Enrollment.builder()
-                .studentId(studentId)
-                .courseId(request.getCourseId())
-                .enrolledAt(LocalDateTime.now())
-                .build();
-
-        Enrollment saved = enrollmentRepository.save(enrollment);
-        return mapToResponse(saved);
+                .map(existing -> {
+                    // Already enrolled: return existing enrollment
+                    return mapToResponse(existing);
+                })
+                .orElseGet(() -> {
+                    // Not enrolled: create new enrollment
+                    Enrollment enrollment = Enrollment.builder()
+                            .studentId(studentId)
+                            .courseId(request.getCourseId())
+                            .enrolledAt(LocalDateTime.now())
+                            .build();
+                    Enrollment saved = enrollmentRepository.save(enrollment);
+                    return mapToResponse(saved);
+                });
     }
 
     @Override

@@ -1,4 +1,4 @@
-console.log("✅ create_course.js loaded");
+console.log("✅ create-course.js loaded");
 
 document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem("token");

@@ -1,8 +1,7 @@
 package com.lms.lmsbackend.instructor.controller;
 
-import com.lms.lmsbackend.auth.model.User;
-import com.lms.lmsbackend.auth.repository.UserRepository;
 import com.lms.lmsbackend.course.dto.CourseResponse;
+import com.lms.lmsbackend.instructor.dto.InstructorProfileResponse;
 import com.lms.lmsbackend.instructor.service.InstructorService;
 import com.lms.lmsbackend.lesson.dto.LessonResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,23 +19,23 @@ import java.util.List;
 public class InstructorController {
 
     private final InstructorService instructorService;
-    private final UserRepository userRepository;
 
-    // Helper: get instructor ID from JWT authentication
+    // Get instructor ID from JWT Authentication
     private Long getInstructorId(Authentication authentication) {
-        String email = authentication.getName(); // JWT username = email
-        return userRepository.findByEmail(email)
-                .orElseThrow()
-                .getId();
+        String email = authentication.getName();
+        return instructorService.getInstructorIdByEmail(email);
     }
 
+    // Fetch instructor profile
     @PreAuthorize("hasRole('INSTRUCTOR')")
     @GetMapping("/profile")
-    public ResponseEntity<User> getProfile(Authentication authentication) {
+    public ResponseEntity<InstructorProfileResponse> getProfile(Authentication authentication) {
         Long instructorId = getInstructorId(authentication);
-        return ResponseEntity.ok(instructorService.getInstructorProfile(instructorId));
+        InstructorProfileResponse profile = instructorService.getInstructorProfile(instructorId);
+        return ResponseEntity.ok(profile);
     }
 
+    // Fetch all courses for the instructor
     @PreAuthorize("hasRole('INSTRUCTOR')")
     @GetMapping("/courses")
     public ResponseEntity<List<CourseResponse>> getCourses(Authentication authentication) {
@@ -44,22 +43,22 @@ public class InstructorController {
         return ResponseEntity.ok(instructorService.getCoursesByInstructor(instructorId));
     }
 
+    // Fetch course stats (total courses & lessons)
     @PreAuthorize("hasRole('INSTRUCTOR')")
     @GetMapping("/courses/count")
     public ResponseEntity<StatsResponse> getStats(Authentication authentication) {
         Long instructorId = getInstructorId(authentication);
-
-        // Fetch courses including lessons
         List<CourseResponse> courses = instructorService.getCoursesByInstructor(instructorId);
 
         int totalCourses = courses.size();
         int totalLessons = courses.stream()
-                .mapToInt(CourseResponse::getTotalLessons) // ✅ Use getter method
+                .mapToInt(CourseResponse::getTotalLessons)
                 .sum();
 
         return ResponseEntity.ok(new StatsResponse(totalCourses, totalLessons));
     }
 
+    // Fetch lessons for a specific course
     @PreAuthorize("hasRole('INSTRUCTOR')")
     @GetMapping("/courses/{courseId}/lessons")
     public ResponseEntity<List<LessonResponse>> getLessons(
@@ -70,6 +69,6 @@ public class InstructorController {
         return ResponseEntity.ok(instructorService.getLessonsByCourse(courseId, instructorId));
     }
 
-    // Record DTO for total courses & lessons
+    // DTO for total courses & lessons
     public record StatsResponse(int totalCourses, int totalLessons) {}
 }

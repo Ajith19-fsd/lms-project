@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -113,5 +114,25 @@ public class StudentService {
     // GET ALL LESSONS OF A COURSE
     public List<LessonResponse> getLessonsByCourse(Long courseId) {
         return lessonService.getLessonsByCourse(courseId);
+    }
+
+    // ✅ ENROLL STUDENT IN A COURSE
+    public boolean enrollStudent(Long studentId, Long courseId) {
+        if (enrollmentRepository.existsByStudentIdAndCourseId(studentId, courseId)) {
+            return false; // already enrolled
+        }
+
+        Enrollment enrollment = new Enrollment();
+        enrollment.setStudentId(studentId);
+        enrollment.setCourseId(courseId);
+        enrollment.setEnrolledAt(LocalDateTime.now());
+
+        enrollmentRepository.save(enrollment);
+        return true;
+    }
+
+    // ✅ CHECK IF STUDENT IS ENROLLED
+    public boolean isStudentEnrolled(Long studentId, Long courseId) {
+        return enrollmentRepository.existsByStudentIdAndCourseId(studentId, courseId);
     }
 }

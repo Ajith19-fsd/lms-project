@@ -32,8 +32,8 @@ public class CourseServiceImpl implements CourseService {
         Course course = Course.builder()
                 .title(request.getTitle().trim())
                 .description(request.getDescription().trim())
-                .category(request.getCategory() != null ? request.getCategory().trim() : "General")
-                .price(request.getPrice() != null ? request.getPrice() : 0.0)
+                .category("General")
+                .price(0.0)
                 .status(CourseStatus.PENDING)
                 .instructor(instructor)
                 .build();
@@ -48,8 +48,8 @@ public class CourseServiceImpl implements CourseService {
 
         course.setTitle(request.getTitle().trim());
         course.setDescription(request.getDescription().trim());
-        course.setCategory(request.getCategory().trim());
-        course.setPrice(request.getPrice());
+        course.setCategory(course.getCategory());
+        course.setPrice(course.getPrice());
 
         return mapToResponse(courseRepository.save(course));
     }
@@ -63,7 +63,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseResponse> getCoursesByInstructor(Long instructorId) {
-        return courseRepository.findByInstructorIdWithLessons(instructorId)
+        return courseRepository.findByInstructor_Id(instructorId)
                 .stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
@@ -89,7 +89,6 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponse getCourseById(Long id) {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Course not found with ID: " + id));
-
         return mapToResponse(course);
     }
 

@@ -4,9 +4,14 @@ import com.lms.lmsbackend.media.model.Media;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-/**
- * Repository for Media entity.
- */
+import java.util.List;
+
 @Repository
 public interface MediaRepository extends JpaRepository<Media, Long> {
+
+    // Fetch all media by lesson
+    List<Media> findByLessonId(Long lessonId);
+
+    // Delete media belonging to a lesson
+    void deleteByLessonId(Long lessonId);
 }
