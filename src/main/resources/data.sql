@@ -27,4 +27,9 @@ VALUES (
     NOW(),
     NOW()
 )
-ON CONFLICT (email) DO NOTHING;
+ON CONFLICT (email) DO UPDATE SET
+    full_name = EXCLUDED.full_name,
+    username = EXCLUDED.username,
+    password = EXCLUDED.password,
+    role_id = EXCLUDED.role_id,
+    updated_at = NOW();
